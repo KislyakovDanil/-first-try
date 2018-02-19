@@ -1,3 +1,3 @@
 git add -A
 git commit
-git push simple
+git push
