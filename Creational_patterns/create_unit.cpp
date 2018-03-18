@@ -32,8 +32,6 @@ struct Unit {
         Location.first = creation_city.first;
         Location.second = creation_city.second;
     }
-    void move(pair<int,int> to) {}
-    void Attack(pair<int,int> to) {}
     virtual ~Unit() {}
 };
 
@@ -95,13 +93,13 @@ struct EnglandArcher: public Archer {
     }
 };
 
-
 struct FranceKnight: public Knight {
     FranceKnight(): Knight(18, 6, 5){}
     void special_skill() {
         cout << "FranceKnightSkill" << endl;
     }
 };
+
 
 // Абстрактная фабрика для производства воинов
 struct UnitFactory {
@@ -123,7 +121,6 @@ struct EnglandUnitFactory: public UnitFactory {
         return new StandartKnight;
     }
 };
-
 
 // Фабрика для создания воинов Французской армии
 struct FranceUnitFactory: public UnitFactory {
