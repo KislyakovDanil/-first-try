@@ -21,14 +21,16 @@ struct UnitFactory {
 // Фабрика для создания воинов Английской армии
 struct EnglandUnitFactory: public UnitFactory {
     Unit* CreateArcher(){
-        return new EnglandArcher;
+        static EnglandArcher archer;
+        return archer.clone();
     }
 };
 
 // Фабрика для создания воинов Французской армии
 struct FranceUnitFactory: public UnitFactory {
     Unit* CreateKnight(){
-        return new FranceKnight;
+        static FranceKnight knight;
+        return knight.clone();
     }
 };
 
