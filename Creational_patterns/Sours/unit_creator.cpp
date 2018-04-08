@@ -1,56 +1,52 @@
 #pragma once
-#include "unit.cpp"
+#include "unit_creator.h"
 
-// Абстрактная фабрика для производства воинов
-struct UnitFactory {
-    virtual Unit* CreateInfantryman() {
-        static StandartInfantryman infantryman;
-        return infantryman.clone();
-    }
-    virtual Unit* CreateArcher() {
-        static StandartArcher archer;
-        return archer.clone();
-    }
-    virtual Unit* CreateKnight() {
-        static StandartKnight knight;
-        return knight.clone();
-    }
-    virtual ~UnitFactory() {}
-};
+Unit*  UnitFactory::CreateInfantryman() {
+    static StandartInfantryman infantryman;
+    return infantryman.clone();
+}
 
-// Фабрика для создания воинов Английской армии
-struct EnglandUnitFactory: public UnitFactory {
-    Unit* CreateArcher(){
-        static EnglandArcher archer;
-        return archer.clone();
-    }
-};
+Unit*  UnitFactory::CreateArcher() {
+    static StandartArcher archer;
+    return archer.clone();
+}
 
-// Фабрика для создания воинов Французской армии
-struct FranceUnitFactory: public UnitFactory {
-    Unit* CreateKnight(){
-        static FranceKnight knight;
-        return knight.clone();
-    }
-};
+Unit*  UnitFactory::CreateKnight() {
+    static StandartKnight knight;
+    return knight.clone();
+}
 
-struct UnitCreator {
-    UnitFactory* CreateUnitFactory(int fraction_id) {
-        switch (fraction_id) {
-            case 0:
-                return new EnglandUnitFactory;
-            case 1:
-                return new FranceUnitFactory;
-        }
+UnitFactory::~UnitFactory() {}
+
+
+Unit* EnglandUnitFactory::CreateArcher(){
+    static EnglandArcher archer;
+    return archer.clone();
+}
+
+
+Unit* FranceUnitFactory::CreateKnight(){
+    static FranceKnight knight;
+    return knight.clone();
+}
+
+
+UnitFactory* UnitCreator::CreateUnitFactory(int fraction_id) {
+    switch (fraction_id) {
+        case 0:
+            return new EnglandUnitFactory;
+        case 1:
+            return new FranceUnitFactory;
     }
-    Unit* CreateUnit(int unit_id, UnitFactory *unit_creator) {
-        switch (unit_id) {
-            case 0:
-                return unit_creator->CreateInfantryman();
-            case 1:
-                return unit_creator->CreateArcher();
-            case 2:
-                return unit_creator->CreateKnight();
-        }
+}
+
+Unit* UnitCreator::CreateUnit(int unit_id, UnitFactory *unit_creator) {
+    switch (unit_id) {
+        case 0:
+            return unit_creator->CreateInfantryman();
+        case 1:
+            return unit_creator->CreateArcher();
+        case 2:
+            return unit_creator->CreateKnight();
     }
-};
+}

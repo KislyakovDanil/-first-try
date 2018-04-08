@@ -1,105 +1,86 @@
 #pragma once
-#include <iostream>
-using namespace std;
+#include "unit.h"
 
-//подумать о добавлении остальных переменных как неконстантных
-struct Unit {
-    int Unit_HP; // хп конкретного юнита
-    const int Max_HP; // максимальны хп данного вида юнитов
-    const int Damage; // атака данного вида юнитов
-    const int Combat_Distance; // максимальное расстояние атаки данного вида юнитов
-    const int Speed; // скорость данного вида юнитов
-    pair<int,int> Location; // местонахождение конкретного юнита
-    Unit(int h, int d, int c_d, int s): Unit_HP(h), Max_HP(h), Damage(d), Combat_Distance(c_d), Speed(s), Location(make_pair(-1,-1)){};
-    virtual void class_skill() = 0;
-    virtual void special_skill() = 0;
-    virtual Unit* clone() = 0;
-    void set_start_square(pair<int,int> creation_city) { // задаёт квадрат, на котором юнит вступает в игру
-        Location.first = creation_city.first;
-        Location.second = creation_city.second;
-    }
-    virtual ~Unit() {}
-};
 
-// Базовые классы всех возможных видов юнитов
-struct Infantryman: public Unit {
-    Infantryman(int h, int d, int s):  Unit(h, d, 1, s){}
-    virtual void special_skill() = 0;
-    virtual Unit* clone() = 0;
-    void class_skill() {
-        cout << "InfantrymanSkill" << endl;
-    }
-    virtual ~Infantryman() {}
-};
+Unit::Unit(int h, int d, int c_d, int s): Unit_HP(h), Max_HP(h), Damage(d), Combat_Distance(c_d), Speed(s), Location(make_pair(-1,-1)){};
 
-struct Archer: public Unit {
-    Archer(int h, int d, int s):  Unit(h, d, 3, s){}
-    virtual void special_skill() = 0;
-    virtual Unit* clone() = 0;
-    void class_skill() {
-        cout << "ArcherSkill" << endl;
-    }
-    virtual ~Archer() {}
-};
+void Unit::set_start_square(pair<int,int> creation_city) { // задаёт квадрат, на котором юнит вступает в игру
+    Location.first = creation_city.first;
+    Location.second = creation_city.second;
+}
 
-struct Knight: public Unit {
-    Knight(int h, int d, int s):  Unit(h, d, 1, s){}
-    virtual void special_skill() = 0;
-    virtual Unit* clone() = 0;
-    void class_skill() {
-        cout << "KnightSkill" << endl;
-    }
-    virtual ~Knight() {}
-};
 
-// Конкретные классы стандартных юнитов
-struct StandartInfantryman: public Infantryman {
-    StandartInfantryman(): Infantryman(12, 4, 2){}
-    virtual Unit* clone(){
-        return new StandartInfantryman(*this);
-    }
-    void special_skill() {
-        cout << "StandartInfantrymanSkill" << endl;
-    }
-};
+Infantryman::Infantryman(int h, int d, int s):  Unit(h, d, 1, s){}
 
-struct StandartArcher: public Archer {
-    StandartArcher():Archer(8, 2, 3){}
-    virtual Unit* clone(){
-        return new StandartArcher(*this);
-    }
-    void special_skill() {
-        cout << "StandartArcherSkill" << endl;
-    }
-};
+void Infantryman::class_skill() {
+    cout << "InfantrymanSkill" << endl;
+}
 
-struct StandartKnight: public Knight {
-    StandartKnight(): Knight(15, 6, 6){}
-    virtual Unit* clone(){
-        return new StandartKnight(*this);
-    }
-    void special_skill() {
-        cout << "StandartKnightSkill" << endl;
-    }
-};
 
-// Конкретные классы уникальных юнитов
-struct EnglandArcher: public Archer {
-    EnglandArcher(): Archer(8, 3, 3){}
-    virtual Unit* clone(){
-        return new EnglandArcher(*this);
-    }
-    void special_skill() {
-        cout << "EnglandArcherSkill" << endl;
-    }
-};
+Archer::Archer(int h, int d, int s):  Unit(h, d, 3, s){}
 
-struct FranceKnight: public Knight {
-    FranceKnight(): Knight(18, 6, 5){}
-    virtual Unit* clone(){
-        return new FranceKnight(*this);
-    }
-    void special_skill() {
-        cout << "FranceKnightSkill" << endl;
-    }
-};
+void Archer::class_skill() {
+    cout << "ArcherSkill" << endl;
+}
+
+
+Knight::Knight(int h, int d, int s):  Unit(h, d, 1, s){}
+
+void Knight::class_skill() {
+    cout << "KnightSkill" << endl;
+}
+
+
+StandartInfantryman::StandartInfantryman(): Infantryman(12, 4, 2){}
+
+Unit* StandartInfantryman::clone(){
+    return new StandartInfantryman(*this);
+}
+
+void StandartInfantryman::special_skill() {
+    cout << "StandartInfantrymanSkill" << endl;
+}
+
+
+StandartArcher::StandartArcher(): Archer(8, 2, 3){}
+
+Unit* StandartArcher::clone(){
+    return new StandartArcher(*this);
+}
+
+void StandartArcher::special_skill() {
+    cout << "StandartArcherSkill" << endl;
+}
+
+
+StandartKnight::StandartKnight(): Knight(15, 6, 6){}
+
+Unit* StandartKnight::clone(){
+    return new StandartKnight(*this);
+}
+
+void StandartKnight::special_skill() {
+    cout << "StandartKnightSkill" << endl;
+}
+
+
+EnglandArcher::EnglandArcher(): Archer(8, 3, 3){}
+
+Unit* EnglandArcher::clone(){
+    return new EnglandArcher(*this);
+}
+
+void EnglandArcher::special_skill() {
+    cout << "EnglandArcherSkill" << endl;
+}
+
+
+FranceKnight::FranceKnight(): Knight(18, 6, 5){}
+
+ Unit* FranceKnight::clone(){
+    return new FranceKnight(*this);
+}
+
+void FranceKnight::special_skill() {
+    cout << "FranceKnightSkill" << endl;
+}

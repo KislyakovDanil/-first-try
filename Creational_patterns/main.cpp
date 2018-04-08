@@ -1,4 +1,4 @@
-#include "Sours\unit_creator.cpp"
+#include "Sours\unit_creator.h"
 
 
 //fraction_id: Англия-0 Франция-1
