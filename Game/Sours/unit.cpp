@@ -4,9 +4,9 @@
 
 Unit::Unit(int h, int d, int c_d, int s): Unit_HP(h), Max_HP(h), Damage(d), Combat_Distance(c_d), Speed(s), Location(make_pair(-1,-1)){};
 
-void Unit::set_start_square(pair<int,int> creation_city) { // задаёт квадрат, на котором юнит вступает в игру
-    Location.first = creation_city.first;
-    Location.second = creation_city.second;
+void Unit::go_to_square(pair<int,int> square) {
+    Location.first = square.first;
+    Location.second = square.second;
 }
 
 

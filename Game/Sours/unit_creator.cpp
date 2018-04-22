@@ -39,14 +39,3 @@ UnitFactory* UnitCreator::CreateUnitFactory(int fraction_id) {
             return new FranceUnitFactory;
     }
 }
-
-Unit* UnitCreator::CreateUnit(int unit_id, UnitFactory *unit_creator) {
-    switch (unit_id) {
-        case 0:
-            return unit_creator->CreateInfantryman();
-        case 1:
-            return unit_creator->CreateArcher();
-        case 2:
-            return unit_creator->CreateKnight();
-    }
-}

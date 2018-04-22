@@ -21,5 +21,4 @@ struct FranceUnitFactory: public UnitFactory {
 
 struct UnitCreator {
     UnitFactory* CreateUnitFactory(int fraction_id);
-    Unit* CreateUnit(int unit_id, UnitFactory *unit_creator);
 };

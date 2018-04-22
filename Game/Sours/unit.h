@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-struct Unit {
+struct Unit{
     int Unit_HP; // хп конкретного юнита
     const int Max_HP; // максимальны хп данного вида юнитов
     const int Damage; // атака данного вида юнитов
@@ -13,8 +13,8 @@ struct Unit {
     virtual void class_skill() = 0;
     virtual void special_skill() = 0;
     virtual Unit* clone() = 0;
-    void set_start_square(pair<int,int> creation_city); // задаёт квадрат, на котором юнит вступает в игру
-    virtual ~Unit() {}
+    void go_to_square(pair<int,int> square);
+    virtual ~Unit() {};
 };
 
 // Базовые классы всех возможных видов юнитов
@@ -23,7 +23,7 @@ struct Infantryman: public Unit {
     virtual void special_skill() = 0;
     virtual Unit* clone() = 0;
     void class_skill();
-    virtual ~Infantryman() {}
+    virtual ~Infantryman() {};
 };
 
 struct Archer: public Unit {
@@ -31,7 +31,7 @@ struct Archer: public Unit {
     virtual void special_skill() = 0;
     virtual Unit* clone() = 0;
     void class_skill();
-    virtual ~Archer() {}
+    virtual ~Archer() {};
 };
 
 struct Knight: public Unit {
@@ -39,7 +39,7 @@ struct Knight: public Unit {
     virtual void special_skill() = 0;
     virtual Unit* clone() = 0;
     void class_skill();
-    virtual ~Knight() {}
+    virtual ~Knight() {};
 };
 
 // Конкретные классы стандартных юнитов
@@ -47,18 +47,21 @@ struct StandartInfantryman: public Infantryman {
     StandartInfantryman();
     virtual Unit* clone();
     void special_skill();
+    virtual ~StandartInfantryman(){};
 };
 
 struct StandartArcher: public Archer {
     StandartArcher();
     virtual Unit* clone();
     void special_skill();
+    virtual ~StandartArcher(){};
 };
 
 struct StandartKnight: public Knight {
     StandartKnight();
     virtual Unit* clone();
     void special_skill();
+    virtual ~StandartKnight(){};
 };
 
 // Конкретные классы уникальных юнитов
@@ -66,10 +69,12 @@ struct EnglandArcher: public Archer {
     EnglandArcher();
     virtual Unit* clone();
     void special_skill();
+    virtual ~EnglandArcher(){};
 };
 
 struct FranceKnight: public Knight {
     FranceKnight();
     virtual Unit* clone();
     void special_skill();
+    virtual ~FranceKnight(){};
 };
