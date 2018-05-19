@@ -1,4 +1,3 @@
-#pragma once
 #include "unit_creator.h"
 
 Unit*  UnitFactory::CreateInfantryman() {

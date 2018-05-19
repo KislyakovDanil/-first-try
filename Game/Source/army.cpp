@@ -1,4 +1,3 @@
-#pragma once
 #include "army.h"
 
 void RealArmy::add_unit(Unit* u) {

@@ -1,4 +1,3 @@
-#pragma once
 #include "map.h"
 
 void Map::Print_Map(const vector<Fraction*>& Fractions){

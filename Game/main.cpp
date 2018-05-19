@@ -1,5 +1,4 @@
-#pragma once
-#include "Sours\game.h"
+#include "Source\game.h"
 
 int main() {
     ArmyCreator A_Creator;
@@ -29,8 +28,29 @@ int main() {
     }
     Fractions.push_back(new Fraction(U_Creator, "England", 0, 0, 0));
     Fractions.push_back(new Fraction(U_Creator, "France", map_size-1, map_size-1, 1));
-    help();
-    Game game(Fractions, World_map, A_Creator, 1);
-    game.start();
+    cout << "Choose first country:" << endl;
+    for (Fraction* f: Fractions){
+        cout << f->name << "-" << f->fraction_id  << endl;
+    }
+    int fraction_id = 0;
+    bool flag;
+    do {
+        flag = false;
+        string inp;
+        cin >> inp;
+        for (char i: inp) {
+            if (isdigit(i) && fraction_id * 10 + i - '0' >= 0 && fraction_id * 10 + i - '0' < Fractions.size()) {
+                fraction_id = fraction_id * 10 + i - '0';
+            } else {
+                flag = true;
+                fraction_id = 0;
+                cout << "Incorrect input, repeat please" << endl;
+                break;
+            }
+        }
+    } while (flag);
+    cout << "To call for help enter 'h'" << endl;
+    Game game(Fractions, World_map, A_Creator, fraction_id);
+    game.global_map();
     return 0;
 }
