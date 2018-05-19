@@ -5,11 +5,6 @@ void RealArmy::add_unit(Unit* u) {
     Units.push_back(u);
 }
 
-void RealArmy::go_to_square(pair<int, int> square) {
-    Location.first = square.first;
-    Location.second = square.second;
-}
-
 RealArmy::~RealArmy() {
     for (vector<Unit*>::iterator it = Units.begin() ; it != Units.end(); ++it) {
         delete (*it);
@@ -28,6 +23,12 @@ void RealArmy::move_commander_skill() {
     cout << "Run";
 }
 
+
+void RealArmy::go_to_square(pair<int,int> l){
+    location.first = l.first;
+    location.second = l.second;
+}
+
 int RealArmy::get_units_size(){
     return Units.size();
 }
@@ -42,12 +43,24 @@ vector<Unit*> RealArmy::get_units(){
     return Units;
 }
 
-pair<int,int> RealArmy::get_location() {
-    return Location;
+int RealArmy::get_fraction_id(){
+    return fraction_id;
 }
 
-Army* ArmyCreator::CreateArmy(UnitFactory* unit_creator,int inf_num, int arch_num, int knig_num, pair<int, int> location){
-    RealArmy* army = new RealArmy;
+int RealArmy::get_army_id(){
+    return army_id;
+}
+
+void RealArmy::set_army_id(int n){
+    army_id = n;
+}
+
+pair<int,int> RealArmy::get_location(){
+    return location;
+}
+
+Army* ArmyCreator::CreateArmy(UnitFactory* unit_creator,int inf_num, int arch_num, int knig_num, int f_id, int a_id, pair<int, int> location){
+    RealArmy* army = new RealArmy(f_id, a_id);
     for (int i = 0; i < inf_num; ++i) {
         army->add_unit(unit_creator->CreateInfantryman());
     }
@@ -57,7 +70,7 @@ Army* ArmyCreator::CreateArmy(UnitFactory* unit_creator,int inf_num, int arch_nu
     for (int i = 0; i < knig_num; ++i) {
         army->add_unit(unit_creator->CreateKnight());
     }
-    army->go_to_square(location);
+    army->go_to_square(location);//переписать на подписку на соответствующий квадрат
     return army;
 }
 
@@ -84,28 +97,41 @@ void Commander::move_commander_skill() {
     army->move_commander_skill();
 }
 
-void Commander::go_to_square(pair<int,int> square){
-    army->go_to_square(square);
+void Commander::go_to_square(pair<int,int> l){
+    army->go_to_square(l);
 }
+
 void Commander::add_unit(Unit* u) {
     army->add_unit(u);
 }
 
 int Commander::get_units_size(){
-    army->get_units_size();
+    return army->get_units_size();
 }
 
 Unit* Commander::extract_last_unit(){
-    army->extract_last_unit();
+    return army->extract_last_unit();
 }
 
 vector<Unit*> Commander::get_units(){
     return army->get_units();
 }
 
+int Commander::get_fraction_id(){
+    return army->get_fraction_id();
+}
+
+int Commander::get_army_id(){
+    return army->get_army_id();
+}
+
+void Commander::set_army_id(int n){
+    army->set_army_id(n);
+}
+
 pair<int,int> Commander::get_location(){
     return army->get_location();
-};
+}
 
 CommanderAttackArea::CommanderAttackArea(Army* a): Commander(a){}
 
